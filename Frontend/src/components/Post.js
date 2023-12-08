@@ -221,7 +221,7 @@ const Post = () => {
             </section>
           </div>
         ) : (
-          <div className="loader w-full h-full flex items-center justify-center"></div>
+          <div className="loader w-screen h-screen ml-[480px] mt-[300px] flex items-center justify-center"></div>
         )}
       </div>
     </div>

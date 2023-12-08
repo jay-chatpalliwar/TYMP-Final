@@ -7,22 +7,23 @@ import Resourcepage from './Resourcepage';
 const Facultyresourcecard = ({data}) => {
 
 const [list,setlist] = useState(true);
-console.log(data)
-
 
  const navigate = useNavigate();
+
+ if(data === null)
+    return ;
   return (
     <div>
     {
     <div className='flex gap-4 p-3 rounded-lg shadow-lg items-center justify-between flex-wrap'>
     <div>
-    <img src="https://img.freepik.com/free-photo/public-examination-preparation-concept_23-2149369870.jpg?size=626&ext=jpg&ga=GA1.1.44546679.1698883200&semt=ais" className='w-[50px] h-[50px]' alt='thumbnail'></img>
+    <img src="https://www.shutterstock.com/image-vector/3d-book-letter-gs-logo-600w-1425267173.jpg" className='w-[50px] h-[50px]' alt='thumbnail'></img>
     </div>
     <div className='flex flex-col gap-2'> 
     <div className='font-bold '>{data?.title}</div>
     </div>
     <div className='flex gap-3'>
-    {/* <button title='edit' onClick={console.log(data)}><EditIcon></EditIcon></button> */}
+  
     <button title='view' onClick={()=>{setlist(false)}}><ViewIcon></ViewIcon></button>
     </div>
     

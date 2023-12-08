@@ -146,6 +146,7 @@ const [role,setrole]= useState('');
 
 const [id,setid] = useState('');
 const [resdata, setresdata] = useState([]);
+const [datafaculty, setFaculty] = useState([]);
 const [difficulty,setdifficulty] = useState('beginner');
 const [imgurl,setimgurl]=useState('');
 const [title,settitle] = useState('');
@@ -204,16 +205,16 @@ const getResources = async()=>{
       throw new Error('Network response was not ok');
     }
     
-    
-    console.log(data.resources)
-     setresdata(data.resources);
+    console.log("Inside published")
+    console.log(data.resources);
+     setFaculty(data.resources);
     
  } 
  catch(e)
  {  
    
     // console.error('Fetch error at resource fetch:', e);
-    console.log("Failed for loading resources")
+    console.log("Failed for loading resources",e)
  }
 }
 const getAll = async()=>{
@@ -455,9 +456,9 @@ const load = () =>{
      ftab===1 && <div>
      {
      (role === "faculty"||role === "teacher") && 
-       resdata.length!==0 ? <div className='flex flex-col gap-5'>
+       datafaculty.length!==0 ? <div className='flex flex-col gap-5'>
        {
-        resdata.map((data,ind)=>{return <Facultyresourcecard key={ind} data={data}></Facultyresourcecard>})
+        datafaculty.map((data,ind)=>{return <Facultyresourcecard key={ind} data={data}></Facultyresourcecard>})
        }
        </div> :<div>No Resources created yet</div>
      }
@@ -467,7 +468,7 @@ const load = () =>{
       }
        {/**for resource form */}
      {
-        role==="faculty" && ftab===2 && 
+        role==="faculty"  && ftab===2 && 
         <div>
         {
          

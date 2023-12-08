@@ -1,6 +1,7 @@
 import React from "react";
 
 const AboutUs = () => {
+
   return (
     <div className="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4 bg-white dark:bg-gray-900">
       <div className="flex flex-col lg:flex-row gap-4">
@@ -41,31 +42,32 @@ const AboutUs = () => {
         <div className="w-full lg:w-8/12 lg:pt-8">
           <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-6 shadow-lg rounded-md">
             <div className="p-4 pb-6 flex justify-center flex-col items-center">
-              {/* <img
-                className="md:block hidden"
-                src="https://i.ibb.co/FYTKDG6/Rectangle-118-2.png"
-                alt="Alexa featured Img"
-              /> */}
               <img
+                className="md:block hidden w-[200px] h-[160px] object-cover"
+                src="https://firebasestorage.googleapis.com/v0/b/gradesarthi.appspot.com/o/files%2Fphoto1.jpg?alt=media&token=cd90dac0-c60e-4c38-9d4c-e9e90f701e93"
+                alt="Alexa featured Img"
+              />
+              {/* <img
                 className="md:hidden block"
                 src=".../public/pictures/photo1.jpg"
                 alt="Alexa featured Img"
-              />
+              /> */}
               <p className="font-medium text-xl leading-5 text-gray-800 mt-4 dark:text-white">
                 Bhupendra
               </p>
             </div>
             <div className="p-4 pb-6 flex justify-center flex-col items-center">
-              {/* <img
-                className="md:block hidden"
-                src=".../pictures/photo.jpg"
-                alt="Olivia featured Img"
-              /> */}
               <img
-                className="md:hidden block"
-                src=".../public/pictures/photo2.jpg"
+                // className='w-[200px] h-[200px]'
+                className="md:block hidden w-[200px] h-[160px] object-cover"
+                src="https://firebasestorage.googleapis.com/v0/b/gradesarthi.appspot.com/o/files%2Fphoto.jpg?alt=media&token=b13974cb-c57e-4889-820a-221d83a75c3f"
                 alt="Olivia featured Img"
               />
+              {/* <img
+                className="md:hidden block"
+                src="https://firebasestorage.googleapis.com/v0/b/gradesarthi.appspot.com/o/files%2Fphoto.jpg?alt=media&token=b13974cb-c57e-4889-820a-221d83a75c3f"
+                alt="Olivia featured Img"
+              /> */}
               <p className="font-medium text-xl leading-5 text-gray-800 mt-4 dark:text-white">
                 Jay
               </p>
@@ -73,7 +75,7 @@ const AboutUs = () => {
             <div className="p-4 pb-6 flex justify-center flex-col items-center">
               <img
                 className="md:block hidden"
-                src="...\pictures\photo.jpg"
+                src="https://firebasestorage.googleapis.com/v0/b/gradesarthi.appspot.com/o/files%2Fphoto2.jpg?alt=media&token=6d240f30-8926-4537-a281-b1830ee61d39"
                 alt="Sourabh featued Img"
               />
               {/* <img

@@ -4,6 +4,7 @@ import Calendar from 'moedim';
 import {LuBookOpenCheck} from 'react-icons/lu'
 import {SiGoogleclassroom} from 'react-icons/si'
 import Piechart from "./Piechart";
+import Loader from "./loader"
 import {FaAccessibleIcon, FaRegClock} from 'react-icons/fa'
 import {LiaUserFriendsSolid} from 'react-icons/lia'
 import Chart from "react-apexcharts";
@@ -113,16 +114,18 @@ import { get } from 'mongoose';
               },
               series: [
                 {
-                  name: "Marks of Student",
+                  name: "Average Marks",
                   data: total
                 },
                 {
-                  name: "Average Marks",
+                  name: `Your Marks`,
                   data: indi
                 },
               ]}
         )
     }
+
+
 
     useEffect(() =>{
          getData();
@@ -140,14 +143,23 @@ import { get } from 'mongoose';
     return (
         <div className='relative'>
             {loading === true &&
-            <div className='flex absolute justify-center left-0 right-0 bg-black'>Loading</div>
+            // <Loader className=' px-96'/>
+            <div
+  className="w-64 ml-[480px] h-screen aspect-square rounded-full flex justify-center items-center animate-[spin_3s_linear_infinite] z-40 bg-[conic-gradient(white_0deg,white_300deg,transparent_270deg,transparent_360deg)] before:animate-[spin_2s_linear_infinite] before:absolute before:w-[60%] before:aspect-square before:rounded-full before:z-[80] before:bg-[conic-gradient(white_0deg,white_270deg,transparent_180deg,transparent_360deg)] after:absolute after:w-3/4 after:aspect-square after:rounded-full after:z-[60] after:animate-[spin_3s_linear_infinite] after:bg-[conic-gradient(#065f46_0deg,#065f46_180deg,transparent_180deg,transparent_360deg)]"
+>
+  <span
+    class="absolute w-[85%] aspect-square rounded-full z-[60] animate-[spin_5s_linear_infinite] bg-[conic-gradient(#34d399_0deg,#34d399_180deg,transparent_180deg,transparent_360deg)]"
+  >
+  </span>
+</div>
+
             }
             {loading === false &&
 
         <div className="container mx-auto ml-8 mt-8">
           <div className="text-center mb-6">
-            <h1 className="text-3xl font-bold">{name}</h1>
-            <p className="text-lg">Sem 5</p>
+            <h1 className="text-3xl font-semibold  text-left">Welcome,{name}</h1>
+            <p className="text-lg text-right">Class : Sem 5</p>
           </div>
           <div className='flex justify-between items-center m-8'>
           <Chart
@@ -163,16 +175,16 @@ import { get } from 'mongoose';
               width="500"
               />
           </div>
-          <div className="flex justify-center space-x-8">
-            <div className="p-4 border rounded-md shadow-md">
+          <div className="flex justify-center space-x-8 items-center">
+            <div className="p-4 border rounded-md shadow-md w-[200px] text-center">
               <h2 className="text-lg font-semibold mb-2">Doubt Forum</h2>
               <a href="/doubtforum" className="text-blue-500 hover:underline block">Visit Doubt Forum</a>
             </div>
-            <div className="p-4 border rounded-md shadow-md">
+            <div className="p-4 border rounded-md shadow-md w-[200px] text-center">
               <h2 className="text-lg font-semibold mb-2">Resources</h2>
               <a href="/resources" className="text-blue-500 hover:underline block">View Resources</a>
             </div>
-            <div className="p-4 border rounded-md shadow-md">
+            <div className="p-4 border rounded-md shadow-md w-[200px] text-center">
               <h2 className="text-lg font-semibold mb-2">Blogs</h2>
               <a href="/blogs" className="text-blue-500 hover:underline block">Read Blogs</a>
             </div>

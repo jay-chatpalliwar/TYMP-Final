@@ -17,7 +17,7 @@ export default function Forum(props) {
   const dispatch = useDispatch();
   console.log(data)
   const name = localStorage.getItem("name");
-  let url = "https://api.dicebear.com/5.x/initials/svg?seed="+ name;
+  let url = "https://api.dicebear.com/5.x/initials/svg?seed="+ data?.payload?.name;
 
   // if(data.payload.name != undefined)
   //   url = url + data.payload.name;
