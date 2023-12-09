@@ -5,19 +5,23 @@ exports.updateprofile = async(req,res)=>{
     try{
         //auth route will be in between
         const email = req.body.email;
+        const updatemail=req.body.updatemail;
         const token =req.body.token;
         const profile = await User.findOne({ email: email });
         
+        // console.log("update mail was "+ updatemail );
+        // console.log('original email was' + email)
+        
         const {name,gender,mobile,branch,specialization,year,sem,department}= req.body;
         
-        
+        if(updatemail) profile.email = updatemail;
         if(name) profile.name = name;
         if(gender) profile.gender=gender;
         if(mobile) profile.mobile=mobile;
         if(branch) profile.branch=branch;
     
        if(department) profile.department = department;
-       console.log("department "+ department)
+      // console.log("department "+ department)
         if(specialization) profile.specialization = specialization;
         if(year) profile.year = year;
         if(sem) profile.current_sem = sem;
