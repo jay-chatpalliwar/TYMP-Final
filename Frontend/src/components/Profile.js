@@ -118,24 +118,13 @@ const Profile = () => {
   
     const updateprofile = async (e) => {
     // login
- try{  
-   if (!isValidFormat) {
-      window.alert('Please enter a valid email address ending with @walchand.sangli.ac.in');
-      return;
-    }
-    
-    if(mobile.length<10 && mobile.length>=1) 
-    {
-     window.alert('Enter A valid mobile');
-     return;
-    }
+ try{ 
    console.log("up called")
      const loadToast = toast.loading("Hang Up!");
       const response = await fetch(`http://localhost:4000/updateProfile`,{
        method:'POST',
        body:JSON.stringify({
          email:em,
-         updatemail:email,
          token:token,
          name,
          gender,
@@ -162,7 +151,7 @@ const Profile = () => {
       { 
         console.log(data)
          setuser(data.profile)
-         localStorage.setItem('email',email);
+         
          setTimeout(() => {
           const uptoast=  toast.loading('Updating your profile , please wait...');
           toast.dismiss(uptoast);          
@@ -234,7 +223,7 @@ const Profile = () => {
   const [branch, setBranch] = useState('');
   const [mobile, setMobile] = useState('');
   const [year, setYear] = useState('');
-  const [gender, setGender] = useState('male');
+  const [gender, setGender] = useState('');
   const [pic, setPic] = useState('');
   const [specialization, setSpecialization] = useState('');
   const [department, setDepartment] = useState('');
@@ -288,11 +277,9 @@ const Profile = () => {
   const handleNameChange = (event) => {
     setName(event.target.value);
   };
-const [isValidFormat, setIsValidFormat] = React.useState(true);
+
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
-    const inputValue = event.target.value;
-   setIsValidFormat(inputValue.endsWith('@walchandsangli.ac.in'));
   };
 
   const handleBranchChange = (event) => {
@@ -327,30 +314,7 @@ const [isValidFormat, setIsValidFormat] = React.useState(true);
     setSemester(event.target.value);
   };
 
-
-  const mobileValidation = (e)=>{
-     if(!e.target.value?.length <10 ) 
-     window.alert('Enter A valid Mobile Number')
-  }
     
-  const handleKeyDown = (e) => {
-    // Allow only numeric characters, and allow backspace and arrow keys
-    const isNumeric = /^[0-9]*$/.test(e.key);
-    const isAllowedKey = e.key === 'Backspace' || e.key === 'ArrowLeft' || e.key === 'ArrowRight';
-    
-    if (!isNumeric && !isAllowedKey) {
-      e.preventDefault();
-    }
-  };
-  
-  const handleBlurr = () => {
-    // Check if the email ends with "@walchand.sangli.ac.in
-    // Display an alert if the format is not matched
-    if (!isValidFormat) {
-      window.alert('Please enter a valid email address ending with @walchand.sangli.ac.in');
-    }
-    
-  };
 
   return (
     <div className='flex min-h-screen'>
@@ -528,45 +492,19 @@ const [isValidFormat, setIsValidFormat] = React.useState(true);
          
           </div>
      
-     <div className='flex flex-col gap-1'>
-      <div className='font-bold text-lg'>Email</div>
-      <input
-        type='email'
-        className='font-bold text-gray-700'
-        onChange={handleEmailChange}
-        onBlur={handleBlurr}
-        value={email}
-        pattern="[a-zA-Z0-9._%+-]+@walchand\.sangli\.ac\.in"
-        title="Please enter a valid email address ending with @walchand.sangli.ac.in"
-      />
-    </div>
+          <div className=' flex flex-col gap-1'>
+          <div className='font-bold text-lg'>Email</div>
+          <input type='text'  className='font-bold text-gray-700' onChange={handleEmailChange} value={email} d></input>
+          </div>
      
-         <div className='flex flex-col gap-1'>
-      <div className='font-bold text-lg'>Mobile</div>
-      <input
-        type='tel'
-        className='font-bold text-gray-700'
-        onChange={handleMobileChange}
-        // onBlur={mobileValidation}
-         onKeyDown={handleKeyDown}
-        value={mobile}
-        maxLength={10}
-      />
-    </div>
+          <div className=' flex flex-col gap-1'>
+          <div className='font-bold text-lg'>Mobile</div>
+         <input type='text'  className='font-bold text-gray-700' onChange={handleMobileChange} value={mobile} ></input>
+          </div>
           
           <div className=' flex flex-col gap-1'>
-           <div className='flex flex-col gap-1'>
-      <div className='font-bold text-lg'>Gender</div>
-      <select
-        className='font-bold text-gray-700'
-        onChange={handleGenderChange}
-        value={gender}
-      >
-        <option value=''>Select Gender</option>
-        <option value='male'>Male</option>
-        <option value='female'>Female</option>
-      </select>
-    </div>
+          <div className='font-bold text-lg'>Gender</div>
+          <input type='text'  className='font-bold text-gray-700' onChange={handleGenderChange} value={gender} ></input>
           </div>
      </div>
      {/**col2 */} 
@@ -576,19 +514,7 @@ const [isValidFormat, setIsValidFormat] = React.useState(true);
           {(role==="student"||role==="faculty")?<div className=' flex flex-col gap-1'>
           {role==="student" && <div className='font-bold text-lg'>Branch</div>}
           {(role==="faculty" || role==="teacher") && <div className='font-bold text-lg'>Department</div>}
-         <select
-        className='font-bold text-gray-700'
-        onChange={handleBranchChange}
-        value={branch}
-      >
-       
-        <option value='Computer Science and Engineering'>Computer Science and Engineering</option>
-        <option value='Information Technology'>Information Technology</option>
-        <option value='Electronics Engineering'>Electronics Engineering</option>
-        <option value='Civil Engineering'>Civil Engineering</option>
-        <option value='Mechanical Engineering'>Mechanical Engineering</option>
-        <option value='Electrical Engineering'>Electrical Engineering</option>
-      </select>
+          <input type='text'  className='font-bold text-gray-700' onChange={handleBranchChange} value={branch} ></input>
           </div>:<></>}
           
           {/* {role==="faculty" ?<div className=' flex flex-col gap-1'>
@@ -598,36 +524,12 @@ const [isValidFormat, setIsValidFormat] = React.useState(true);
      
           {role==="student" ? <div className=' flex flex-col gap-1'>
           <div className='font-bold text-lg'>Semester</div>
-         <select
-        className='font-bold text-gray-700'
-        onChange={handleSemesterChange}
-        value={semester}
-      >
-       
-        <option value='1'>1</option>
-        <option value='2'>2</option>
-        <option value='3'>3</option>
-        <option value='4'>4</option>
-        <option value='5'>5</option>
-        <option value='6'>6</option>
-        <option value='7'>7</option>
-        <option value='8'>8</option>
-      </select>
+          <input type='text'  className='font-bold text-gray-700' onChange={handleSemesterChange} value={semester} ></input>
           </div> : <></>}
      
           {role==="student" ?<div className=' flex flex-col gap-1'>
           <div className='font-bold text-lg'>Academic year</div>
-         <select
-        className='font-bold text-gray-700'
-        onChange={handleYearChange}
-        value={year}
-      >
-       
-        <option value='1'>1</option>
-        <option value='2'>2</option>
-        <option value='3'>3</option>
-        <option value='4'>4</option>
-      </select>
+          <input type='text' placeholder='specify a number 1-4'  className='font-bold text-gray-700' onChange={handleYearChange} value={year}></input>
           </div> : <></>} 
           
           {role==="faculty" ?<div className=' flex flex-col gap-1'>
