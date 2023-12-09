@@ -24,6 +24,7 @@ const Post = () => {
   const [user,setuser]=useState({})
   const em = localStorage.getItem('email');
    const token = localStorage.getItem('token');
+   const name = localStorage.getItem('name');
    console.log("Data taken from token.")
    console.log(token)
    console.log(em)
@@ -112,7 +113,7 @@ const Post = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user: user?.name,
+        user: name,
         body: commentInput,
       }),
     })

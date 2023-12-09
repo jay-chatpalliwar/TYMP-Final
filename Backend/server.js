@@ -32,6 +32,15 @@ app.post('/addMessage',addMessage);
 const {getMessages} = require('./controllers/getMessages');
 app.get('/getMessages',cors(),getMessages);
 
+const {getId} = require('./controllers/getId');
+app.post('/getId',cors(),getId);
+
+const {replyMessage} = require('./controllers/replyMessage');
+app.post('/replyMessage',cors(),replyMessage);
+
+const {getReply} = require('./controllers/getReply');
+app.post('/getReply',cors(),getReply);
+
 const {Messages} = require('./controllers/message');
 app.post('/findMessage',cors(),Messages);
 

@@ -85,6 +85,7 @@ export default function Message(props) {
   const value = useSelector((state) => state.update.value)
   const [data, setData] = useState([]);
   const apiUrl = "http://localhost:4000/getMessages"; // Replace with your API endpoint
+
   useEffect(() => {
     async function getData() {
       await fetch(apiUrl)

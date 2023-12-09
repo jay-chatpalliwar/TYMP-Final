@@ -25,6 +25,7 @@ export default function Forum(props) {
   const [post, setPost] = useState(null);
   const [commentInput, setCommentInput] = useState("");
   const [comments, setComments] = useState([]);
+  const [id,setId] = useState("");
 
   const postId = "6548cd6d8beef6fba61e2bf5"; // Get the postId from the route
 
@@ -69,7 +70,7 @@ export default function Forum(props) {
       if(response.ok)
       { 
        
-        console.log(data.user)
+        // console.log(data.user)
          setuser(localStorage.getItem("name"))
         //  setrole(data.user.role)
         //  setSemester(data.user.current_sem);
@@ -88,30 +89,47 @@ export default function Forum(props) {
 
   useEffect(() => {
     getprofile();
+    if(data.payload.id !== null)
+  first();
     // Fetch the full post details using the postId
-    fetch(`http://localhost:4000/post/${postId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setPost(data.data);
-        console.log("post.body:", post.body);
-      })
-      .catch((error) => {
-        console.log("Error fetching post details:", error);
-      });
+    // fetch(`http://localhost:4000/post/${postId}`)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //     setPost(data.data);
+    //     console.log("post.body:", post.body);
+    //   })
+    //   .catch((error) => {
+    //     console.log("Error fetching post details:", error);
+    //   });
 
-      console.log(postId);
+    //   console.log(postId);
     // Fetch comments for the post
-    fetch(`http://localhost:4000/post/${postId}/comments`)
+  }, [data.payload.id]);
+
+  const first = async () =>{
+    fetch(`http://localhost:4000/getReply`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id:data.payload.id
+      }),
+    })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        setComments(data.comments);
+        // console.log("xdxdxdxdxdxdxdxdxdxdxdxd")
+        // console.log(data.data.reply);
+        setComments(data.data.reply); 
+// Add the new comment to the list of comments
+        // console.log(comments);
+        setCommentInput(""); // Clear the comment input field
       })
       .catch((error) => {
-        console.log("Error fetching comments:", error);
+        console.log("Error creating comment:", error);
       });
-  }, [postId]);
+  }
 
   //creating the comment
   const handleCreateComment = () => {
@@ -121,20 +139,24 @@ export default function Forum(props) {
     }
 
     // Send the comment to the server
-    fetch(`http://localhost:4000/post/${postId}/comments/create`, {
+    fetch(`http://localhost:4000/replyMessage`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user: user?.name,
-        body: commentInput,
+        name: user,
+        message:commentInput,
+        id:data.payload.id
       }),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        setComments([...comments, data.comment]); // Add the new comment to the list of comments
+        // console.log("xdxdxdxdxdxdxdxdxdxdxdxd")
+        // console.log(data.data.reply);
+        setComments(data.data.reply); 
+// Add the new comment to the list of comments
+        // console.log(comments);
         setCommentInput(""); // Clear the comment input field
       })
       .catch((error) => {
@@ -142,19 +164,23 @@ export default function Forum(props) {
       });
   };
 
-  const generateAvatarUrl = (name) => {
-    let formattedName;
-    console.log(user);
-    console.log(name);
-    // if (user === name) {
-    //   formattedName = "Me";
-    // } else {
-      formattedName = name.replace(/\s+/g, "+");
-    // }
-    // Replace spaces in the name with '+'
+  // if(value === true){
+  //   first();
+  // }
 
-    return `https://ui-avatars.com/api/?name=${formattedName}`;
-  };
+  // const generateAvatarUrl = (name) => {
+  //   let formattedName;
+  //   console.log(user);
+  //   console.log(name);
+  //   // if (user === name) {
+  //   //   formattedName = "Me";
+  //   // } else {
+  //     formattedName = name.replace(/\s+/g, "+");
+  //   // }
+  //   // Replace spaces in the name with '+'
+
+  //   return `https://ui-avatars.com/api/?name=${formattedName}`;
+  // };
   return (
     <div className="relative h-screen w-screen">
       <div className="flex flex-col h-screen w-full justify-between relative py-4 overflow-hidden right-0">
@@ -162,9 +188,9 @@ export default function Forum(props) {
         <Text user={props.user} />
       </div>
       {value === true && (
-        <div className=" absolute z-40 -top-3 right-0 h-[85%] flex flex-col justify-center items-center">
+        <div className=" absolute z-40 -top-3 right-2 h-[88%] flex flex-col justify-center items-center">
 
-        <div className="cursor-pointer -mr-60"
+        <div className="cursor-pointer -mr-[340px]"
           onClick={() => dispatch(change())}
           
           >
@@ -211,18 +237,18 @@ export default function Forum(props) {
                     <div className="flex items-center mb-2">
                       <img
                         className="w-6 h-6 mr-2 rounded-full"
-                        src={generateAvatarUrl(comment.user)}
-                        alt={comment.user}
+                        src={comment?.url}
+                        alt={comment?.name}
                       />
                       <p className="text-sm text-gray-900 dark:text-white font-semibold">
-                        {comment.user===user?"Me":comment.user}
+                        {comment?.name===user?"Me":comment?.name}
                       </p>
                     </div>
-                    <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
-                      {format(new Date(comment.createdAt), "eeee, MMM d, yyyy")}
-                    </p>
+                    {/* <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
+                      {format(new Date(comment.time), "eeee, MMM d, yyyy")}
+                    </p> */}
                     <p className="text-gray-900 dark:text-white">
-                      {comment.body}
+                      {comment.message}
                     </p>
                   </div>
                 ))}

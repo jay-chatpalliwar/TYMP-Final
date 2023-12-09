@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { change,changeData } from "../Slices/replySlice";
 export default function Card(props) {
@@ -18,24 +18,51 @@ export default function Card(props) {
     time:message.time,
     id:1
   }
+  
+  const getId = async() =>{
+    try{
+      // console.log("jayjayjay")
+      // console.log(message.time)
+      const result = await fetch("http://localhost:4000/getId",{
+        method:'POST',
+        body:JSON.stringify({
+          name:message.name,
+          message:message.message,
+          time:message.time
+        }),
+        headers:{
+          'Content-type': 'application/json; charset=UTF-8'       }
+       });
+
+       const res = await result.json();
+      //  console.log(res);
+
+       return res;
+      //  setId(data._id);
+
+    }catch(e){
+      console.log("error::::::::::::;",e);
+    }
+  }
 
   const handleReply =async () =>{ 
     if(value === false)
       {
-        const response = await fetch(`http://localhost:4000/findMessage`,{
-       method:'POST',
-       body:JSON.stringify({
-         data:data
-       }),
-       headers:{
-         'Content-type': 'application/json; charset=UTF-8'       }
-      })
+      //   const response = await fetch(`http://localhost:4000/findMessage`,{
+      //  method:'POST',
+      //  body:JSON.stringify({
+      //    data:data
+      //  }),
+      //  headers:{
+      //    'Content-type': 'application/json; charset=UTF-8'       }
+      // })
       
-      const data1 = await response.json();
+      // const data1 = await response.json();
+      const res = await getId();
+      // console.log(res);
+      data.id = res.data._id;
       console.log("############################################")
-      // console.log(data);
-      data.id = data1.data._id;
-      // console.log(data);
+      console.log(data);
         dispatch(change());
         dispatch(changeData(data));
       
