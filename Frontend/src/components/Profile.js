@@ -7,6 +7,10 @@ import { useNavigate } from 'react-router-dom';
 const Profile = () => {
  const [view,setview] = useState(1);
  const [user,setuser]=useState({})
+  const [f,setf]=useState();
+   const [s,sets]=useState();
+    const [m,setm]=useState();
+
    const [currentpassword,setCurrentpassword]=useState('')
     const [newpassword,setNewpassword]=useState('')
      const [confirmpassword,setConfirmpassword]=useState('')
@@ -129,6 +133,24 @@ const Profile = () => {
      window.alert('Enter A valid mobile');
      return;
     }
+    
+     for (let i = 0; i < name.length; i++) {
+    const char = name[i].toLowerCase();
+    if (!((char >= 'a' && char <= 'z') || char === ' ')) {
+      window.alert('invalid name')
+      console.log("dfg")
+      return ;
+    }
+  }
+
+  // Check if the name starts and ends with a letter (not a space)
+  if (!/^[a-zA-Z]/.test(name) || !/[a-zA-Z]$/.test(name)) {
+  window.alert('invalid name')
+    return;
+  }
+
+    localStorage.setItem('name',name);
+    
    console.log("up called")
      const loadToast = toast.loading("Hang Up!");
       const response = await fetch(`http://localhost:4000/updateProfile`,{
@@ -253,6 +275,13 @@ const Profile = () => {
   if (user.name !== undefined) {
 
     setName(user.name);
+    
+    setTimeout(() => {
+      sets();
+      setm();
+      setf();
+    }, 1000);
+    
   }
    console.log(user.role)
   if (user.branch !== undefined) {
@@ -391,7 +420,7 @@ const [isValidFormat, setIsValidFormat] = React.useState(true);
      <div className='flex flex-col gap-2'>
      
           <div className=' flex flex-col gap-1'>
-          <div className='font-bold text-lg'>Name</div>
+          <div className='font-bold text-lg'>Full Name</div>
           <div className='font-bold text-gray-700'>{user?.name}</div>
           </div>
      
@@ -582,6 +611,7 @@ const [isValidFormat, setIsValidFormat] = React.useState(true);
         value={branch}
       >
        
+       <option value=''>Select Branch</option>
         <option value='Computer Science and Engineering'>Computer Science and Engineering</option>
         <option value='Information Technology'>Information Technology</option>
         <option value='Electronics Engineering'>Electronics Engineering</option>
@@ -604,6 +634,7 @@ const [isValidFormat, setIsValidFormat] = React.useState(true);
         value={semester}
       >
        
+        <option value=''>Select Semester</option>
         <option value='1'>1</option>
         <option value='2'>2</option>
         <option value='3'>3</option>
@@ -623,6 +654,7 @@ const [isValidFormat, setIsValidFormat] = React.useState(true);
         value={year}
       >
        
+       <option value=''>Select Academic year</option>
         <option value='1'>1</option>
         <option value='2'>2</option>
         <option value='3'>3</option>
@@ -638,9 +670,7 @@ const [isValidFormat, setIsValidFormat] = React.useState(true);
           
       </div>
     }
-     
-         
-     
+          
      </div>
      
  </div>
