@@ -125,10 +125,60 @@ import { get } from 'mongoose';
         )
     }
 
+    const [role,setrole] = useState("");
+    const em = localStorage.getItem("email");
+    const token = localStorage.getItem("token")
 
+    const getprofile = async (e) => {
+      // login
+   try{ 
+     console.log("gp called")
+      // const loadToast = toast.loading("Hang Up!");
+        const response = await fetch(`http://localhost:4000/getProfile`,{
+         method:'POST',
+         body:JSON.stringify({
+           email:em,
+           token:token
+         }),
+         headers:{
+           'Content-type': 'application/json; charset=UTF-8'       }
+        })
+        
+        const data = await response.json();
+       
+       
+        setTimeout(() => {
+         // toast.dismiss(loadToast)
+        }, 1000);
+        
+        
+        
+        if(response.ok)
+        { 
+         
+          // console.log(data.user);
+          //  setid(data.user._id);
+          //  console.log("Chejdnfdknt'lkfhlkhgcnhfjlkynlk")
+          //  console.log(data.user.role);
+           setrole(data.user.role);
+          //  setname(data.user.name);
+          
+        }
+        else
+        {
+        // setTimeout(()=>{toast.error(data.message)},1000);
+        
+        }
+      }
+      catch(e)
+      {
+        console.log("error at profile fetch - "+e);
+      }
+    };
 
     useEffect(() =>{
          getData();
+         getprofile();
          setTimeout(() =>{
             setLoading(false);
 
@@ -142,7 +192,11 @@ import { get } from 'mongoose';
         
     return (
         <div className='relative'>
-            {loading === true &&
+          {role === "faculty" &&
+          <div className='flex mx-auto px-10 py-10 my-auto justify-center items-center text-3xl text-teal-600'>Welcome {name} to Faculty Dashboard.</div>
+
+          }
+            {loading === true && role === "student" &&
             // <Loader className=' px-96'/>
             <div
   className="w-64 ml-[480px] h-screen aspect-square rounded-full flex justify-center items-center animate-[spin_3s_linear_infinite] z-40 bg-[conic-gradient(white_0deg,white_300deg,transparent_270deg,transparent_360deg)] before:animate-[spin_2s_linear_infinite] before:absolute before:w-[60%] before:aspect-square before:rounded-full before:z-[80] before:bg-[conic-gradient(white_0deg,white_270deg,transparent_180deg,transparent_360deg)] after:absolute after:w-3/4 after:aspect-square after:rounded-full after:z-[60] after:animate-[spin_3s_linear_infinite] after:bg-[conic-gradient(#065f46_0deg,#065f46_180deg,transparent_180deg,transparent_360deg)]"
@@ -154,7 +208,7 @@ import { get } from 'mongoose';
 </div>
 
             }
-            {loading === false &&
+            {loading === false && role == "student" &&
 
         <div className="container mx-auto ml-8 mt-8">
           <div className="text-center mb-6">
