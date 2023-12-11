@@ -47,7 +47,7 @@ const Blogs = () => {
           Blog Posts
         </h3>
 
-        {userRole === "teacher" || userRole === "admin" || userRole==="faculty" ? (
+        {userRole === "teacher" || userRole === "admin" || userRole==="faculty" || userRole==="student" ? (
           <div className="flex justify-end my-4">
             <button
               className="px-4 py-2 text-sm font-medium text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
